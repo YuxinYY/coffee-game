@@ -11,6 +11,8 @@
 </head>
 <body>
   <div id="app"></div>
+
+  <!-- Progress Bar -->
   <div id="progress-bar" class="hidden">
     <div id="progress-track">
       <div class="progress-step" data-step="1">Size</div>
@@ -23,26 +25,13 @@
       <div class="progress-step" data-step="8">Done</div>
     </div>
   </div>
+
+  <!-- Navigation -->
   <div id="nav" class="hidden">
     <button id="back-btn" class="nav-btn">← Back</button>
     <button id="next-btn" class="nav-btn" disabled>Next →</button>
   </div>
+
   <script src="script.js"></script>
-  <script>
-    window.addEventListener('load', () => {
-      state.currentStep = 8;
-      state.choices = {
-        size: 'large',
-        temperature: 'hot',
-        cupMaterial: 'paper',
-        cupStyle: 'pink-rose',
-        coffeeBase: 'medium',
-        syrups: [{ flavor: 'caramel', method: 'line' }],
-        milk: 'oat',
-        toppings: ['whippedCream', 'cinnamonDust']
-      };
-      render();
-    });
-  </script>
 </body>
 </html>

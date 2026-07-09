@@ -956,8 +956,36 @@ body {
   }
 
   .final-cup-container {
-    width: 160px;
+    width: 192px;
     height: 224px;
+  }
+
+  .cup {
+    width: 136px;
+  }
+
+  .cup::before {
+    right: -24px;
+    top: 38px;
+    width: 36px;
+    height: 70px;
+    border-width: 10px;
+  }
+
+  .cup::after {
+    width: 120px;
+    height: 18px;
+    bottom: -14px;
+  }
+
+  .cup-body {
+    width: 136px;
+    height: 160px;
+    border-radius: 12px 12px 44px 44px;
+  }
+
+  .coffee-fill {
+    border-radius: 0 0 44px 44px;
   }
 
   .final-buttons {

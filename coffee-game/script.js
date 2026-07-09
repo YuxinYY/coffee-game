@@ -621,7 +621,7 @@ function renderFinalResult() {
           <div class="cup-lid">
             <div class="sip-hole"></div>
           </div>
-          <div class="cup-body" style="background: ${cupBg}; border-color: ${cupBorder};">
+          <div class="cup-body" style="--fill-pct:${fillPct}%;">
             <div class="coffee-fill" style="height: ${fillPct}%; background: ${liquidColor};">
               <div class="foam-layer" style="height: ${foamH}px;"></div>
               ${syrupLinesHtml}

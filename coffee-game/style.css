@@ -523,53 +523,77 @@ body {
 .final-cup-container {
   margin: 0 auto;
   position: relative;
-  width: 200px;
+  width: 240px;
   height: 280px;
   animation: cupRise 0.8s ease-out;
-  filter: drop-shadow(0 20px 30px rgba(36, 28, 24, 0.15));
 }
 
-/* Cup layers */
+/* Realistic cup shape */
 .cup {
   position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px 8px 20px 20px;
-  overflow: hidden;
+  width: 170px;
+  margin: 0 auto;
+  padding-top: 10px;
+  z-index: 1;
 }
 
-.cup-body {
+/* Cup handle */
+.cup::before {
+  content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 20px;
-  border-radius: 8px 8px 20px 20px;
-  overflow: hidden;
-  border: 1px solid rgba(36, 28, 24, 0.12);
+  right: -30px;
+  top: 48px;
+  width: 46px;
+  height: 90px;
+  border: 12px solid #E8E4DF;
+  border-left: none;
+  border-radius: 0 28px 50px 0;
+  box-shadow: 3px 6px 12px rgba(36, 28, 24, 0.1);
+  z-index: -1;
+}
+
+/* Saucer */
+.cup::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 22px;
+  background: radial-gradient(ellipse at center, #FFFFFF 0%, #E8E4DF 100%);
+  border-radius: 50%;
+  box-shadow: 0 10px 24px rgba(36, 28, 24, 0.15);
+  z-index: -2;
 }
 
 .cup-lid {
-  position: absolute;
-  top: 0;
-  left: -4px;
-  right: -4px;
-  height: 22px;
-  background: linear-gradient(to bottom, #E0D0C0, #C8B8A8);
-  border-radius: 12px 12px 0 0;
-  z-index: 5;
-  border: 1px solid rgba(36, 28, 24, 0.1);
+  display: none;
 }
 
-.cup-lid .sip-hole {
+.cup-body {
+  position: relative;
+  width: 170px;
+  height: 200px;
+  background: linear-gradient(100deg, #E6E2DD 0%, #FFFFFF 35%, #FFFFFF 65%, #D9D5D0 100%) !important;
+  border-radius: 14px 14px 55px 55px;
+  box-shadow: inset -12px 0 24px rgba(0, 0, 0, 0.08), inset 12px 0 24px rgba(0, 0, 0, 0.05), 0 18px 40px rgba(36, 28, 24, 0.2);
+  overflow: hidden;
+  z-index: 2;
+  border: none !important;
+}
+
+/* Inner rim shadow */
+.cup-body::before {
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #3E332D;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.08), transparent);
+  z-index: 5;
+  pointer-events: none;
 }
 
 /* Coffee fill */
@@ -578,19 +602,45 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
+  height: var(--fill-pct, 70%);
   transition: height 1s ease;
-  border-radius: 0 0 18px 18px;
+  border-radius: 0 0 55px 55px;
   overflow: hidden;
+  z-index: 1;
+}
+
+/* Cup shading overlay */
+.coffee-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.28) 0%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.22) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Surface highlight */
+.coffee-fill::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 10%;
+  right: 10%;
+  height: 28px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 4;
 }
 
 .coffee-fill .foam-layer {
   position: absolute;
-  top: -8px;
+  top: -6px;
   left: 0;
   right: 0;
-  height: 18px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3));
+  height: 24px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.5));
   border-radius: 50%;
+  z-index: 3;
 }
 
 /* Syrup lines on cup wall */
@@ -627,10 +677,10 @@ body {
 /* Toppings */
 .toppings-layer {
   position: absolute;
-  top: 8px;
+  top: calc(100% - var(--fill-pct) - 26px);
   left: 5%;
   right: 5%;
-  height: 30px;
+  height: 34px;
   z-index: 4;
   pointer-events: none;
 }
@@ -642,13 +692,16 @@ body {
 
 /* Whipped cream */
 .topping-whipped {
-  left: 10%;
-  width: 80%;
-  height: 20px;
-  background: radial-gradient(ellipse at center, white, #F0F0F0);
-  border-radius: 50%;
-  top: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86%;
+  height: 28px;
+  background:
+    radial-gradient(ellipse 26px 18px at 20% 85%, #FFFFFF 60%, transparent 61%),
+    radial-gradient(ellipse 32px 24px at 50% 60%, #FFFFFF 60%, transparent 61%),
+    radial-gradient(ellipse 26px 18px at 80% 85%, #FFFFFF 60%, transparent 61%);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  top: -6px;
 }
 
 /* Chocolate shavings */
@@ -663,11 +716,11 @@ body {
 /* Cinnamon dust */
 .topping-cinnamon {
   width: 100%;
-  height: 3px;
-  background: radial-gradient(ellipse, #8D6E63 30%, transparent 70%);
-  background-size: 8px 3px;
-  top: 5px;
-  opacity: 0.6;
+  height: 34px;
+  background-image: radial-gradient(#8D6E63 18%, transparent 22%);
+  background-size: 5px 5px;
+  top: -2px;
+  opacity: 0.45;
 }
 
 /* Caramel drizzle */
